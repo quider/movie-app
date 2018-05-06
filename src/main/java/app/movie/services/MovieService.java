@@ -30,4 +30,9 @@ public class MovieService {
     public void deleteMovie(String id){
         this.movieRepository.deleteById(id);
     }
+
+    public List<Movie> getByRanking(double rating){
+        List<Movie> movies = this.movieRepository.findMoviesByRatingsOrderByRatingsDesc(rating);
+        return movies;
+    }
 }

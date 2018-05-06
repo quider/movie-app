@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "Movies")
 public class Movie {
@@ -16,7 +18,6 @@ public class Movie {
     private String id;
 
     @Size(min = 3, max = 50)
-    @Field("Title")
     private String title;
 
     @Indexed(direction = IndexDirection.DESCENDING)
@@ -24,10 +25,12 @@ public class Movie {
 
     private String director;
     private String actors;
+    private List<Review> reviews;
     private LocalDateTime createdAt;
 
     protected Movie(){
         this.createdAt = LocalDateTime.now();
+        this.reviews = new ArrayList<>();
     }
 
     public Movie(String title, double ratings, String director, String actors,LocalDateTime createdAt) {
@@ -42,7 +45,6 @@ public class Movie {
         return id;
     }
 
-    @Field("Title")
     public String getTitle() {
         return title;
     }
@@ -61,5 +63,13 @@ public class Movie {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }
