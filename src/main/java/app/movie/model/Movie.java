@@ -4,7 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Document(collection = "Movies")
@@ -13,6 +15,8 @@ public class Movie {
     @Id
     private String id;
 
+    @Size(min = 3, max = 50)
+    @Field("Title")
     private String title;
 
     @Indexed(direction = IndexDirection.DESCENDING)
@@ -21,6 +25,10 @@ public class Movie {
     private String director;
     private String actors;
     private LocalDateTime createdAt;
+
+    protected Movie(){
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Movie(String title, double ratings, String director, String actors,LocalDateTime createdAt) {
         this.title = title;
@@ -34,6 +42,7 @@ public class Movie {
         return id;
     }
 
+    @Field("Title")
     public String getTitle() {
         return title;
     }
